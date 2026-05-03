@@ -21,6 +21,7 @@ func main() {
 
 	// 👇 API
 	r.GET("/api/trips", handlers.GetTrips)
+	r.POST("/api/trips", handlers.CreateTrip)
 	r.GET("/api/places", handlers.GetPlaces)
 
 	r.Run(":8080")

@@ -17,13 +17,19 @@ func GetTrips(c *gin.Context) {
 	}
 	defer rows.Close()
 
-	var trips []models.Trip
+	trips := []models.Trip{}
 
 	for rows.Next() {
 		var t models.Trip
-		rows.Scan(&t.ID, &t.Title, &t.StartDate, &t.EndDate)
+
+		err := rows.Scan(&t.ID, &t.Title, &t.StartDate, &t.EndDate)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
 		trips = append(trips, t)
 	}
 
-	c.JSON(200, trips)
+	c.JSON(http.StatusOK, trips)
 }

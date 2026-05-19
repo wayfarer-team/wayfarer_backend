@@ -34,4 +34,18 @@ func createTables() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	queryEvents := `
+	CREATE TABLE IF NOT EXISTS events (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	day_id INTEGER,
+	title TEXT,
+	start_time TEXT,
+	location_name TEXT,
+	cost INTEGER,
+	description TEXT
+);
+`
+
+	DB.Exec(queryEvents)
 }

@@ -64,3 +64,31 @@ func CreateTrip(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, trip)
 }
+
+func UpdateTrip(c *gin.Context) {
+	id := c.Param("id")
+
+	var t models.Trip
+
+	if err := c.ShouldBindJSON(&t); err != nil {
+		c.JSON(400, gin.H{"error": "invalid data"})
+		return
+	}
+
+	_, err := database.DB.Exec(
+		"UPDATE trips SET title=?, start_date=?, end_date=? WHERE id=?",
+		t.Title,
+		t.StartDate,
+		t.EndDate,
+		id,
+	)
+
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"message": "trip updated",
+	})
+}

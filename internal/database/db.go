@@ -22,6 +22,8 @@ func InitDB() {
 
 func createTables() {
 	query := `
+	ALTER TABLE events
+	ADD COLUMN trip_id INTEGER;
 	CREATE TABLE IF NOT EXISTS trips (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		title TEXT,
@@ -38,6 +40,7 @@ func createTables() {
 	queryEvents := `
 	CREATE TABLE IF NOT EXISTS events (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	trip_id INTEGER,
 	day_id INTEGER,
 	title TEXT,
 	start_time TEXT,

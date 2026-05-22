@@ -8,4 +8,5 @@ type Event struct {
 	LocationName string `json:"location_name"`
 	Cost         int    `json:"cost"`
 	Description  string `json:"description"`
+	TripID       int    `json:"trip_id"`
 }

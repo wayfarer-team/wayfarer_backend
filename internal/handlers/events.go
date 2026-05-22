@@ -53,9 +53,10 @@ func CreateEvent(c *gin.Context) {
 	}
 
 	_, err := database.DB.Exec(`
-		INSERT INTO events(day_id, title, start_time, location_name, cost, description)
-		VALUES (?, ?, ?, ?, ?, ?)
+		INSERT INTO events(trip_id, day_id, title, start_time, location_name, cost, description)
+		VALUES (?, ?, ?, ?, ?, ?, ?)
 	`,
+		e.TripID,
 		e.DayID,
 		e.Title,
 		e.StartTime,

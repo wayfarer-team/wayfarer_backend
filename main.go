@@ -27,6 +27,7 @@ func main() {
 	r.GET("/api/events", handlers.GetEvents)
 	r.POST("/api/events", handlers.CreateEvent)
 	r.DELETE("/api/events/:id", handlers.DeleteEvent)
+	r.GET("/api/trips/:id/budget", handlers.GetBudget)
 
 	r.Run(":8080")
 }

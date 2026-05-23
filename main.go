@@ -28,6 +28,8 @@ func main() {
 	r.POST("/api/events", handlers.CreateEvent)
 	r.DELETE("/api/events/:id", handlers.DeleteEvent)
 	r.GET("/api/trips/:id/budget", handlers.GetBudget)
+	r.POST("/api/register", handlers.Register)
+	r.POST("/api/login", handlers.Login)
 
 	r.Run(":8080")
 }

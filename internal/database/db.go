@@ -22,8 +22,6 @@ func InitDB() {
 
 func createTables() {
 	query := `
-	ALTER TABLE events
-	ADD COLUMN trip_id INTEGER;
 	CREATE TABLE IF NOT EXISTS trips (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		title TEXT,
@@ -49,6 +47,46 @@ func createTables() {
 	description TEXT
 );
 `
+
+	queryPlaces := `
+	CREATE TABLE IF NOT EXISTS places (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT,
+		description TEXT,
+		image_url TEXT,
+		region TEXT,
+		category TEXT,
+		approximate_cost INTEGER
+	);
+	`
+
+	_, err = DB.Exec(queryPlaces)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	DB.Exec(`
+	INSERT INTO places(name, description, image_url, region, category, approximate_cost)
+	VALUES
+	('Ala-Archa', 'National park', 'alaarcha.jpg', 'chuy', 'nature', 200),
+	('Burana Tower', 'Historical place', 'burana.jpg', 'chuy', 'museum', 150)
+	`)
+
+	queryUsers := `
+	CREATE TABLE IF NOT EXISTS users (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		username TEXT,
+		email TEXT UNIQUE,
+		password TEXT
+	);
+	`
+
+	_, err = DB.Exec(queryUsers)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	DB.Exec(queryEvents)
 }

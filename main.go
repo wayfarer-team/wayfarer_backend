@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
+
 	"wayfarer/internal/handlers"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +13,8 @@ import (
 func main() {
 	database.InitDB()
 	r := gin.Default()
+
+	r.Use(cors.Default())
 
 	// тестовый роут
 	r.GET("/", func(c *gin.Context) {

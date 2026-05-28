@@ -16,6 +16,7 @@ import (
 func main() {
 	// Инициализируем БД
 	database.InitDB()
+
 	defer database.CloseDB()
 
 	r := gin.Default()
@@ -36,11 +37,6 @@ func main() {
 	}
 
 	log.Printf("Starting server on port %s", port)
-
-	// Используем "0.0.0.0", чтобы слушать все сетевые интерфейсы
-	if err := r.Run("0.0.0.0:" + port); err != nil {
-		log.Fatalf("Failed to run server: %v", err)
-	}
 
 	// Health check
 	r.GET("/", func(c *gin.Context) {
@@ -410,6 +406,11 @@ func main() {
 			"message":  "Login successful",
 		})
 	})
+
+	// Используем "0.0.0.0", чтобы слушать все сетевые интерфейсы
+	if err := r.Run("0.0.0.0:" + port); err != nil {
+		log.Fatalf("Failed to run server: %v", err)
+	}
 
 	// Выводим все зарегистрированные роуты
 	log.Println("📋 Registered routes:")

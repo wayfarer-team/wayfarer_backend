@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"os"
 	"time"
 	"wayfarer/internal/database"
 
@@ -27,6 +28,19 @@ func main() {
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 	}))
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
+
+	log.Printf("Starting server on port %s", port)
+
+	// Используем "0.0.0.0", чтобы слушать все сетевые интерфейсы
+	if err := r.Run("0.0.0.0:" + port); err != nil {
+		log.Fatalf("Failed to run server: %v", err)
+	}
 
 	// Health check
 	r.GET("/", func(c *gin.Context) {

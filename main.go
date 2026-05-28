@@ -36,6 +36,7 @@ func main() {
 	}
 
 	log.Printf("Starting server on port %s", port)
+
 	// Используем "0.0.0.0", чтобы слушать все сетевые интерфейсы
 	if err := r.Run("0.0.0.0:" + port); err != nil {
 		log.Fatalf("Failed to run server: %v", err)
